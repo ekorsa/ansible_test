@@ -61,7 +61,7 @@
         db: my_company_db
         name: "{{ vault_db_user }}"
         password: "{{ vault_db_password }}"
-        priv: "ALL"
+        privileges: "ALL" # FIX: Changed from 'priv' to 'privileges'
       become: yes
       become_user: postgres
 
