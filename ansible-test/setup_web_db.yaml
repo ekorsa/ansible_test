@@ -1,0 +1,39 @@
+---
+- name: Настройка веб-сервера
+  hosts: web
+  tasks:
+    - name: Установка веб-сервера Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Создание кастомной главной страницы
+      copy:
+        src: ./web_sup_project/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Проверка, что Nginx запущен и работает
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+- name: Настройка сервера базы данных
+  hosts: db
+  tasks:
+    - name: Установка СУБД PostgreSQL
+      apt:
+        name: postgresql
+        state: present
+        update_cache: yes
+
+    - name: Проверка, что PostgreSQL запущен и работает
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+
