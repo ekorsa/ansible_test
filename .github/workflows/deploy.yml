@@ -35,3 +35,8 @@ jobs:
     - name: Run Ansible Playbook
       run: |
         ansible-playbook setup_web_db.yaml -i hosts.ini --vault-password-file .vault_pass.txt
+
+    # Step 5: Remove the vault password file from disk regardless of job outcome
+    - name: Cleanup vault password file
+      if: always()
+      run: rm -f .vault_pass.txt
